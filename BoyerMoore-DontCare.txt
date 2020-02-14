@@ -1,45 +1,56 @@
-Case 1: Wildcards in middle
-Needle		krak_tat
-Needle		kra__tat
+Changes to Algorithm:
+	Option: Match all non-dontcare areas on their own
+		?downside: does it take advantage of shifting?
+	Option?: Table that answers all possible characters at every position.
+	
+Changes to BadCharacter:
+	Case 1: dontcares in middle
+	Needle		krak_tat
+	Needle		kra__tat
 
-BadChar:	A wildcard can be in between any next known or unknown character.
-			Any mismatching character will fall into the nearest wildcard pit, unless a matching position stands in between
-			Mismatch non-existing Character: nearest wildcard to the left
-				Usual array lookup for indexList won't work: All characters will match the nearest wildcard.
-				Option: Lookup array for 
+	<Fact> A dontcare can be in between any next known or unknown character.
+	<Rule> Any mismatching character will fall into the nearest dontcare pit, unless a matching position sits in between
+	Mismatch Char not in pattern: nearest dontcare to the left
+		Usual array lookup for indexList won't work: All characters will match the nearest dontcare.
+		Option: Lookup array for
+
+	<Prob> Where to store indices of dontcare areas?
+		<Option> Store only indices of the right-end of dontcare areas
+			<Option>	Store a seperate list of the indices
+			<Option>	Store indices inside character occurence lists
+				<Prob> the fact that particular indices are dontcare positions must be stored seperately
+					<Rule> ignore that, pretend the dontcare is the sought-after symbol and shift to it.
+			<Option>	Store the seperate list for non-occuring characters
+						and the respecting indices inside the lists of existing characters
 				
-			Option: Table that answers all possible characters at every position.
-				- 
-			Idea: Matching on DontCare Fields.
-				Option A: BadChar could respond the amount of DontCare positions to skip checking to the algorithm
-				Option B: The algorithm could do that itself, too and don't ask its other rules then.
-					--> Preprocess DontCare regions, skip over them.
-					--> Would result BadChar/GoodSuffix Rules only having to answer to mismatches on true pattern characters.
-			--> Rules, like in OG BM, shouldn't be asked when a match occurs, anyway.
-			--> Rules don't have to prepare for matching agains DontCare.
-			Mismatch after all wildcards: Business as usual
-			(No mismatches inside wildcards & badchar won't get called on wildcard pos)
-GoodSuffix:	same as orig: 'tat' could match inside the wildcards. Same Nj strategy as gusfield.
-AfterMatch: same as orig: Biggest prefix/suffix align
-Algorithm:
+	Problem: Matching on DontCare Fields. {
+		Option A: BadChar could respond the amount of DontCare positions to skip checking to the algorithm
+		Option B: The algorithm could do that itself, too and don't ask its other rules then.
+			--> Preprocess DontCare regions, skip over them.
+			--> Would result BadChar/GoodSuffix Rules only having to answer to mismatches on true pattern characters.
+		--> Rules, like in OG BM, shouldn't be asked when a match occurs, anyway.
+		--> Rules don't have to prepare for matching agains DontCare.
+	}
+	
+	Mismatch after all dontcares: Business as usual
+	(No mismatches inside dontcares & badchar won't get called on dontcare pos)
+	GoodSuffix:	same as orig: 'tat' could match inside the dontcares. Same Nj strategy as gusfield.
+	AfterMatch: same as orig: Biggest prefix/suffix align
 
--> Option: Match all non-wildcard areas on their own
-	?downside: does it take advantage of shifting?
-
-Case 2: Multiple Wildcard fields in middle
-Needle		kr_k_tat
-Needle		k__k__at
+	Case 2: Multiple dontcare fields in middle
+	Needle		kr_k_tat
+	Needle		k__k__at
 
 
-Case 2: Wildcard(s) in Front
-Needle		_rakotat
-Needle		__akotat
+	Case 2: dontcare(s) in Front
+	Needle		_rakotat
+	Needle		__akotat
 
-Case 3: Wildcard in Back
-Needle		krakota_
-Needle		krakot__
+	Case 3: dontcare in Back
+	Needle		krakota_
+	Needle		krakot__
 
-Case 4..?: Mixed
+	Case 4..?: Mixed
 
 
 
