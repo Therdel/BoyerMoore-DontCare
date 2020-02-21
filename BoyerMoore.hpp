@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <vector>
 
-#include "HeteroArenaAllocator/Arena.hpp"
+#include "HeteroArenaAllocator/ArenaAllocator.hpp"
 #include "BadCharTable.hpp"
 #include "GoodSuffixTable.hpp"
 
@@ -14,6 +14,7 @@ public:
 private:
 	PatternRef _pattern;
 	HeapArena _arena;
+	ArenaAllocator _arenaAllocator;
 	BadCharTable _badCharTable;
 	GoodSuffixTable _goodSuffixTable;
 };

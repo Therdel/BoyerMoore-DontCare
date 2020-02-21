@@ -4,8 +4,9 @@
 BoyerMoore::BoyerMoore(PatternRef pattern)
 : _pattern(pattern)
 , _arena(BadCharTable::arenaSpaceNeeded(pattern) + GoodSuffixTable::arenaSpaceNeeded(pattern))
-, _badCharTable(ArenaAllocator(_arena), pattern)
-, _goodSuffixTable(ArenaAllocator(_arena), pattern) {
+, _arenaAllocator(_arena)
+, _badCharTable(_arenaAllocator, pattern)
+, _goodSuffixTable(_arenaAllocator, pattern) {
 }
 
 auto BoyerMoore::search(std::basic_string_view<uint8_t> haystack)->std::vector<uint8_t const*> {
