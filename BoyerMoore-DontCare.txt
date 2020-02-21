@@ -3,6 +3,13 @@ Changes to Algorithm:
 		<downside>? does it take advantage of shifting?
 	<Option>? Table that answers all possible characters at every position.
 	
+Open Problems {
+	<Prob> Pattern: asdfasdf____ab
+	       Matching from the right: BadChar/GoodSuffix both would never shift more than 2 on mismatch in beginning.
+		   ?Problem is, that the probability of mismatch few chars in the beginning is higher than mismatch later in pattern.? (intuition)
+
+		<Option> Match chunk-wise. Match chunks longest to shortest. That way BadChar can work its best without falling into dontcare-traps.
+}
 Changes to BadCharacter:
 	Case 1: dontcares in middle {
 		Needle		krak_tat
