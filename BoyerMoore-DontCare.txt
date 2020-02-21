@@ -3,6 +3,7 @@ Changes to Algorithm:
 		<downside>? does it take advantage of shifting?
 	<Option>? Table that answers all possible characters at every position.
 	
+
 Open Problems {
 	<Prob> Pattern: asdfasdf____ab
 	       Matching from the right: BadChar/GoodSuffix both would never shift more than 2 on mismatch in beginning.
@@ -10,6 +11,7 @@ Open Problems {
 
 		<Option> Match chunk-wise. Match chunks longest to shortest. That way BadChar can work its best without falling into dontcare-traps.
 }
+	
 Changes to BadCharacter:
 	Case 1: dontcares in middle {
 		Needle		krak_tat
@@ -57,7 +59,98 @@ Changes to BadCharacter:
 
 	Case 4..?: Mixed
 
+Changes to Good Suffix Rule {
+	<Option> 'naive', whole pattern matching, right-to-left
+		Example: _ra__t__sd
+		Table:	Mismatch:	Shift:
+				        d	1	none
+				       sd	2	suffix
+				    t__sd	2	suffix
+				 a__t__sd	2	suffix :(
+				ra__t__sd	2	suffix :(
+	<Option> Sorted chunk matching {
+		Example:    _ra__t__sd
+		Chunk #:     00  2  11
+		<Option> per-chunk, only look further to the left
+			Table:	Mismatch:	Shift:
+					  a			1 none
+					 ra			2 suffix	?prefix with dontcare chunk to the right?
+					         d	1 none
+					        sd	2 suffix
+					     t		1 none
+		<Option> per-chunk, use knowledge of already matched chunks {
+			Mismatching charactes are marked with 'v'
+			Table:	Mismatch:	Shift:
+					  v
+					  a			1 none
+                     v
+					 ra			2 suffix/prefix
+					         v
+					 ra      d	2 prefix ('a' of 'ra')
+				            v
+					 ra     sd	2 prefix
+					     v
+					 ra  t  sd  2 prefix
+			
+			<Problem> build table incorporating knowledge of previously matched chunks
+			<Problem> "strong" rule analogy: Next suffix occurance mustn't have the same character at the mismatch position
 
+			<Problem> Prefix-Rule / "Whats a prefix here?" {
+				<Rule> For pattern 33_111_000_22 (chunk notation)
+					- Mismatch in 0 would cause prefix only inside chunk 0
+					- "        "  1 would cause prefix search in [111_000]
+					- "        "  2 would cause prefix search in [111_000_22]
+					- "        "  3 would cause prefix search in whole pattern
+				<Example> {
+					0000000__2222_11111
+					dfdsdfd__tdfd_asdfd
+						  d            	1	none
+						 fd				2	suffix (strong)
+						dfd				6	prefix (len 1)
+					   sdfd				4	prefix (len 3)
+					  dsdfd				4	prefix (len 3)
+					 fdsdfd				4	prefix (len 3)
+					dfdsdfd           d	4	chunk0 after-match-rule -> 4
+					dfdsdfd          fd	?	chunk0: after-match -> 4
+											chunk1: good suffix -> 2
+								  d			<Problem> when shifted by 4, the matched d mismatches in the pattern.
+											--> We want to find the "suffix" "dfdsdfd___________d".
+			 "dfdsdfd___________d"      6	prefix (len 13)
+					dfdsdfd         dfd		"suffix" is "dfdsdfd__________fd"
+			 "dfdsdfd__________fd"		6	prefix (len 13)
+					dfdsdfd        sdfd		"suffix" is "dfdsdfd________sdfd"
+		  ..dfd________sdfd"			12	prefix (len 7)
+					dfdsdfd       asdfd		"suffix" is "dfdsdfd_______asdfd"
+		  ..______asdfd"				16	prefix (len 3)
+					dfdsdfd     d_asdfd		"suffix" is "dfdsdfd_____d_asdfd"
+		  ..______asdfd"				16	prefix (len 3)
+					dfdsdfd    fd_asdfd		"suffix" is "dfdsdfd____fd_asdfd"
+		  ..______asdfd"				16	prefix (len 3)
+					dfdsdfd   dfd_asdfd		"suffix" is "dfdsdfd___dfd_asdfd"
+		  ..______asdfd"				16	prefix (len 3)
+					dfdsdfd__tdfd_asdfd
+				}
+			}
+		}
+		<Problem> ?What if matching sub-pattern if found in an area that already matched? That way, areas would be matched more than once?
+
+		<Problem> When is good-suffix-dont-care rule shifting the most? {
+			--> When a suffix isn't found, the prefix rule kicks in,
+				?which always shifts more or equal than the suffix rule?
+				--> ?Minimize chance of matching suffix
+					--> ?Maximize suffix length
+			--> ?A Suffix is found harder
+		}
+	}
+
+	<Example>
+	Needle 0:	krakot__
+		<Option> Good Suffix is only called upon rightmost letter 't'.
+		<Option> 
+
+	Needle 0:	kr__ot__
+	- 
+}
 
 Pos			76543210
 
