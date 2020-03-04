@@ -85,7 +85,7 @@ auto BadCharTableDontCare::computeShift(int mismatchIdx, uint8_t mismatchSymbol)
 	}
 
 	int shiftAmount;
-	// take rightmost of both candidate indices
+	// choose candidate based on smallest shift, so no possible re-match is missed
 	int nextMatchingIndex = std::max(nextOccuringIndex, nextDontCareIndex);
 	if (nextMatchingIndex != -1) {
 		// recommend shift to next match
