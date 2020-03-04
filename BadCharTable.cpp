@@ -92,6 +92,7 @@ auto BadCharTable::arenaSpaceNeeded(PatternRef pattern) -> size_t {
 auto BadCharTable::buildTableInArena(ArenaAllocator& allocator, PatternRef pattern) -> IndexTable& {
 	IndexTable* indexTable = allocator.construct<IndexTable>();
 	if (indexTable == nullptr) {
+		// TODO: bad alloc error msg
 		throw std::bad_alloc();
 	}
 	// initialize array
@@ -109,6 +110,10 @@ auto BadCharTable::buildTableInArena(ArenaAllocator& allocator, PatternRef patte
 
 		auto& shiftList = (*indexTable)[curSymbol];
 		auto* nextShift = allocator.construct<IndexList::Node>(shift);
+		if (nextShift == nullptr) {
+			// TODO: bad alloc error msg
+			throw std::bad_alloc();
+		}
 		shiftList.append(nextShift);
 	}
 
