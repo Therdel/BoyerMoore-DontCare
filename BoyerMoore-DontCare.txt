@@ -46,6 +46,20 @@ Changes to BadCharacter:
 	Needle		kr_k_tat
 	Needle		k__k__at
 
+	Case 2: Multiple dontcare fields in middle {
+		Needle		kr_k_tat
+		Needle		k__k__at
+
+		<Prob> Shift when mismatch _after_ dontcare field {
+			   knerz___ab
+				  ^        <- Mismatch at 'r'
+			   <Prob>? 'r' doesn't occur again in the pattern. Normal BadChar would suggest shift by 4 Positions. {
+			           Characters of beginning of pattern could move into dontcare areas.
+					<Fact> not a problem. All pattern-aligns to the left weren't matching,
+						   and as this alignment doesn't at this position, a right-shift is legit to discard impossible alignments
+			   }
+		}
+	}
 
 	Case 2: dontcare(s) in Front
 	Needle		_rakotat
