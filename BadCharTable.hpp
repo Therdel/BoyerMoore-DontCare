@@ -12,8 +12,8 @@ public:
 	explicit BadCharTable(ArenaAllocator &allocator, PatternRef pattern);
 
 	static auto arenaSpaceNeeded(PatternRef pattern)->size_t;
-	auto printTable() -> void;
-	auto computeShift(int matchLength, uint8_t mismatchSymbol) -> int;
+	auto printTable() const -> void;
+	auto computeShift(int matchLength, uint8_t mismatchSymbol) const -> int;
 
 private:
 	using IndexList = ForwardList<int>;

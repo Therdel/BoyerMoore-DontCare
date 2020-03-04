@@ -9,7 +9,7 @@ BadCharTable::BadCharTable(ArenaAllocator& allocator, PatternRef pattern)
 }
 
 #include <iostream>	// printTable
-auto BadCharTable::printTable() -> void {
+auto BadCharTable::printTable() const -> void {
 	using namespace std;
 	cout << "Pattern: ";
 	for (uint8_t c : _pattern) {
@@ -17,7 +17,7 @@ auto BadCharTable::printTable() -> void {
 	}
 	cout << endl;
 
-	cout << "Index table: (total size=" << arenaSpaceNeeded(_pattern) << endl;
+	cout << "Index table: (total size=" << arenaSpaceNeeded(_pattern) << " bytes)" << endl;
 	for(uint8_t c = 0; c < std::numeric_limits<uint8_t>::max(); ++c) {
 		IndexList& list = _indexTable[c];
 		if (!list.empty()) {
@@ -30,7 +30,7 @@ auto BadCharTable::printTable() -> void {
 	}
 }
 
-auto BadCharTable::computeShift(int matchLength, uint8_t mismatchSymbol) -> int {
+auto BadCharTable::computeShift(int matchLength, uint8_t mismatchSymbol) const -> int {
 	auto &indexList = _indexTable[mismatchSymbol];
 
 	// find index at which found symbol occurs again in pattern
