@@ -22,7 +22,5 @@ private:
 	PatternRef _pattern;
 	IndexTable &_indexTable;
 
-	// static auto amountDuplicateSymbols(PatternRef pattern)->size_t;
-
 	static auto buildTableInArena(ArenaAllocator& allocator, PatternRef pattern) -> IndexTable&;
 };

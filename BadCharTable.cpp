@@ -58,24 +58,6 @@ auto BadCharTable::computeShift(int matchLength, uint8_t mismatchSymbol) const -
 	return shiftAmount;
 }
 
-/*
-#include <bitset>
-auto BadCharTable::amountDuplicateSymbols(PatternRef pattern) -> size_t {
-	std::bitset<256> symbolAlreadySeen;
-	size_t amountDuplicates = 0;
-	for (uint8_t c : pattern) {
-		if (symbolAlreadySeen.test(c)) {
-			// 
-			++amountDuplicates;
-		}
-		else {
-			symbolAlreadySeen.set(c);
-		}
-	}
-	return amountDuplicates;
-}
-*/
-
 auto BadCharTable::arenaSpaceNeeded(PatternRef pattern) -> size_t {
 	// TODO: pessimistic padding
 	size_t worstCaseIndexTablePadding = alignof(IndexTable) - 1;
