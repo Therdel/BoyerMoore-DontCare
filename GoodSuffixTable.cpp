@@ -20,7 +20,7 @@ auto GoodSuffixTable::arenaSpaceNeeded(PatternRef pattern) -> size_t {
 	// TODO: this is pessimistic padding
 	using shiftDistanceType = decltype(_shiftTable)::value_type;
 	size_t worstCasePadding = alignof(shiftDistanceType) - 1;
-	size_t shiftTableBytes = pattern.size() * sizeof(int);
+	size_t shiftTableBytes = pattern.size() * sizeof(shiftDistanceType);
 	return worstCasePadding + shiftTableBytes;
 }
 
