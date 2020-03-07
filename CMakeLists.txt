@@ -11,5 +11,6 @@ add_executable (BoyerMoore
 				"BadCharTable.cpp"
 				"BadCharTableDontCare.cpp"
 				"GoodSuffixTable.cpp"
+				"GoodSuffixTableDontCare.cpp"
 				"BoyerMoore.cpp"
 				"main.cpp")
