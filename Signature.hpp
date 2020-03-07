@@ -1,4 +1,5 @@
 #pragma once
+#include <string> // std::stoi
 #include "Utility.hpp"
 
 namespace SignatureMask {
