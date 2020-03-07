@@ -16,16 +16,15 @@ auto BadCharTableDontCare::printTable() const -> void {
 	auto &pattern = _signature.pattern();
 	auto &mask = _signature.mask();
 
-	cout << std::showbase	// hex numbers with 0x prefix
-		 << std::uppercase;	// hex numbers in capital letters
+	cout << std::showbase;	// hex numbers with 0x prefix
 
-	cout << "Pattern: ";
+	cout << "Pattern:\t";
 	for (int i = 0; i < pattern.size(); ++i) {
 		if (mask[i] == SignatureMask::DONT_CARE) {
-			cout << "?? ";
+			cout << "??\t";
 		}
 		else {
-			cout << std::hex << std::showbase << static_cast<size_t>(pattern[i]) << ' ';
+			cout << std::hex << std::showbase << static_cast<size_t>(pattern[i]) << '\t';
 		}
 	}
 	cout << endl;
@@ -51,8 +50,7 @@ auto BadCharTableDontCare::printTable() const -> void {
 		cout << endl;
 	};
 	cout << std::resetiosflags(std::ios_base::hex | std::ios_base::dec)
-	     << std::noshowbase
-		 << std::nouppercase;
+	     << std::noshowbase;
 }
 
 auto BadCharTableDontCare::computeShift(int mismatchIdx, uint8_t mismatchSymbol) const -> int {
