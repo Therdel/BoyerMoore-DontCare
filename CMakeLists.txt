@@ -7,6 +7,7 @@ project ("BoyerMoore")
 # Add source to this project's executable.
 add_executable (BoyerMoore
 				"Utility.cpp"
+				"MatchOrder.cpp"
 				"BadCharTable.cpp"
 				"BadCharTableDontCare.cpp"
 				"GoodSuffixTable.cpp"
