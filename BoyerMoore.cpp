@@ -16,7 +16,7 @@ auto BoyerMoore::search(std::basic_string_view<uint8_t> haystack)->std::vector<u
 	std::vector<uint8_t const*> matches;
 
 	size_t pos = 0;
-	while(pos < lastMatchCandidatePos) {
+	while(pos <= lastMatchCandidatePos) {
 		int nextShift;
 
 		bool match = true;
