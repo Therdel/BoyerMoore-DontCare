@@ -1,5 +1,7 @@
 #pragma once
-#include <string> // std::stoi
+#include <string>		// std::stoi
+#include <stdexcept>	// std::invalid_argument
+
 #include "Utility.hpp"
 
 namespace SignatureMask {

@@ -3,8 +3,8 @@
 
 #include "BoyerMooreDontCare/BoyerMoore.hpp"
 #include "HeteroArenaAllocator/ArenaAllocator.hpp"
-#include "Signature.hpp"
-#include "BoyerMooreDontCare.hpp"
+#include "BoyerMooreDontCare/Signature.hpp"
+#include "BoyerMooreDontCare/BoyerMooreDontCare.hpp"
 
 using namespace std;
 
@@ -50,7 +50,7 @@ void test_badCharDontCare(Signature const&signature) {
 	BadCharTableDontCare badCharTableDontCare{ arenaAllocator, signature };
 	badCharTableDontCare.printTable();
 
-	size_t mismatchIdx = 4;
+	int mismatchIdx = 4;
 	uint8_t mismatchSymbol = 0xba;
 	std::cout << "Mismatch index=" << mismatchIdx << std::endl;
 	std::cout << "Mismatch symbol=" << std::hex << "0x" << std::uppercase << static_cast<size_t>(mismatchSymbol) << std::resetiosflags(std::ios_base::basefield) << std::endl;
@@ -83,7 +83,7 @@ auto test_matchOrder(Signature const&signature) {
 	auto printOrder = [&pattern](MatchOrder::MatchOrder_t const& order) {
 		for (int i = 0; i < pattern.size(); ++i) {
 			auto it = std::find(order.begin(), order.end(), i);
-			int orderIndex = std::distance(order.begin(), it);
+			int orderIndex = static_cast<int>(std::distance(order.begin(), it));
 			if (it != order.end()) {
 				cout << orderIndex;
 			}

@@ -38,7 +38,7 @@ auto GoodSuffixTable::_preprocessShifts() -> void {
 	_writeLhyphenValues(intStorage);
 
 	// 2. write recommended shifts to table
-	auto patternLen = _pattern.size();
+	auto patternLen = static_cast<int>(_pattern.size());
 	auto lastIndex = patternLen - 1;
 	for (int mismatchIdx = 0; mismatchIdx < lastIndex; ++mismatchIdx) {
 		int lHyphen = intStorage[mismatchIdx + 1];
@@ -70,7 +70,7 @@ auto GoodSuffixTable::_preprocessShifts() -> void {
 
 auto GoodSuffixTable::_N(int j) const -> int {
 	int suffixLength{ 0 };
-	auto patternLength = _pattern.size();
+	auto patternLength = static_cast<int>(_pattern.size());
 	for (int i = 0; i < patternLength && j >= i; ++i) {
 		int prefixIdx = j - i;
 		int patternSuffixIdx = (patternLength - 1) - i;
@@ -86,7 +86,7 @@ auto GoodSuffixTable::_N(int j) const -> int {
 }
 
 auto GoodSuffixTable::_writeLhyphenValues(int* buffer) const -> void {
-	auto patternLen = _pattern.size();
+	auto patternLen = static_cast<int>(_pattern.size());
 	std::fill(buffer, buffer + patternLen, 0);
 
 	int lastPatternIndex = patternLen - 1;
@@ -105,7 +105,8 @@ auto GoodSuffixTable::_writeLhyphenValues(int* buffer) const -> void {
 auto GoodSuffixTable::_iHyphen(int i) const -> int {
 	int suffixPrefixMatchLength{ 0 };
 
-	int substringLength = (_pattern.size() - 1) - i;
+	auto patternLen = static_cast<int>(_pattern.size());
+	int substringLength = (patternLen - 1) - i;
 	for (int suffixLength = 1; suffixLength <= substringLength; ++suffixLength) {
 		// compare 
 		bool prefixSuffixEqual = std::equal(_pattern.begin(), _pattern.begin() + suffixLength,
@@ -120,5 +121,5 @@ auto GoodSuffixTable::_iHyphen(int i) const -> int {
 auto GoodSuffixTable::_computeAfterMatchShift() const -> int {
 	// _iHyphen(0) would just match the whole pattern as its own 
 	// prefix/suffix pair and thus always return the patterns length
-	return _pattern.size() - _iHyphen(1);
+	return static_cast<int>(_pattern.size()) - _iHyphen(1);
 }

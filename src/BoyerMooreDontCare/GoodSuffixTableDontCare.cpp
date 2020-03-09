@@ -113,7 +113,7 @@ auto GoodSuffixTableDontCare::_computeAfterMatchShift() const -> int {
 	}
 	if (afterMatchShift == -1) {
 		// no overlapping shift possible, shift by whole pattern
-		afterMatchShift = _signature.pattern().size();
+		afterMatchShift = static_cast<int>(_signature.pattern().size());
 	}
 	return afterMatchShift;
 }
