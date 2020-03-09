@@ -14,15 +14,4 @@ namespace Utility {
 			}
 		}
 	}
-
-	auto split(std::string_view str, std::string_view delims) -> std::vector<std::string_view> {
-		std::vector<std::string_view> output;
-		//output.reserve(str.size() / 2);
-
-		split_for(str, delims, [&output](std::string_view split_item) {
-			output.emplace_back();
-			});
-
-		return output;
-	}
 }
