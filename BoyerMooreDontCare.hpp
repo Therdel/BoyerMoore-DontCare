@@ -12,7 +12,7 @@ class BoyerMooreDontCare {
 public:
 	explicit BoyerMooreDontCare(const Signature &signature);
 
-	auto search(std::basic_string_view<uint8_t> haystack)->std::vector<uint8_t const*>;
+	auto search(std::basic_string_view<uint8_t> haystack) const -> std::vector<uint8_t const*>;
 private:
 	const Signature &_signature;
 	HeapArena _arena;

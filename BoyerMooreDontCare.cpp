@@ -13,7 +13,7 @@ BoyerMooreDontCare::BoyerMooreDontCare(const Signature& signature)
 {
 }
 
-auto BoyerMooreDontCare::search(std::basic_string_view<uint8_t> haystack)->std::vector<uint8_t const*> {
+auto BoyerMooreDontCare::search(std::basic_string_view<uint8_t> haystack) const -> std::vector<uint8_t const*> {
 	auto& pattern = _signature.pattern();
 	auto& mask = _signature.mask();
 	size_t lastMatchCandidatePos = haystack.size() - pattern.size();
