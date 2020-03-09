@@ -4,14 +4,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project ("BoyerMoore")
 
-# Add source to this project's executable.
-add_executable (BoyerMoore
-				"Utility.cpp"
-				"MatchOrder.cpp"
-				"BadCharTable.cpp"
-				"BadCharTableDontCare.cpp"
-				"GoodSuffixTable.cpp"
-				"GoodSuffixTableDontCare.cpp"
-				"BoyerMoore.cpp"
-				"BoyerMooreDontCare.cpp"
-				"main.cpp")
+add_subdirectory(HeteroArenaAllocator)
+
+set(BOYERMOOREDONTCARE_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
+
+set(BOYERMOOREDONTCARE_INCLUDE_DIRS
+		${HETEROARENAALLOCATOR_INCLUDE_DIRS}
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src"
+		PARENT_SCOPE)
+
+set(BOYERMOOREDONTCARE_SOURCES
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/Utility.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/MatchOrder.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/BadCharTable.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/BadCharTableDontCare.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/GoodSuffixTable.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/GoodSuffixTableDontCare.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/BoyerMoore.cpp"
+		"${BOYERMOOREDONTCARE_LIST_DIR}/src/BoyerMooreDontCare/BoyerMooreDontCare.cpp"
+		PARENT_SCOPE)

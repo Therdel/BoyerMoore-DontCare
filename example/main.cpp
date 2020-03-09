@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "BoyerMoore.hpp"
+#include "BoyerMooreDontCare/BoyerMoore.hpp"
 #include "HeteroArenaAllocator/ArenaAllocator.hpp"
 
 using namespace std;
