@@ -42,9 +42,9 @@ Changes to BadCharacter:
 		<Fact> Mismatch after all dontcares: Business as usual
 			   (No mismatches inside dontcares & badchar won't get called on dontcare pos)
 
-	Case 2: Multiple dontcare fields in middle
-	Needle		kr_k_tat
-	Needle		k__k__at
+		GoodSuffix:	same as orig: 'tat' could match inside the dontcares. Same Nj strategy as gusfield.
+		AfterMatch: same as orig: Biggest prefix/suffix align
+	}
 
 	Case 2: Multiple dontcare fields in middle {
 		Needle		kr_k_tat
@@ -156,6 +156,15 @@ Changes to Good Suffix Rule {
 			--> ?A Suffix is found harder
 		}
 	}
+	
+	- BadChar LOVES most distance to next dontcare-field.
+	- GoodSuffix...
+		- dontcare help with shifting a suffix further?
+			- no matching suffix is better than any match?
+		? prefix rule becomes the suffix rule when there's a long part of dontcares:
+			T:          asdflkasjdföl
+			P:      d____firz
+			
 
 	<Example>
 	Needle 0:	krakot__
