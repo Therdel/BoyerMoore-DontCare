@@ -25,7 +25,8 @@ auto BoyerMooreDontCare::search(std::basic_string_view<uint8_t> haystack) const 
 		int nextShift;
 
 		bool match = true;
-		for (int matchOrderPos = 0; matchOrderPos < _matchOrder.size(); ++matchOrderPos) {
+		int matchOrderLength = static_cast<int>(_matchOrder.size());
+		for (int matchOrderPos = 0; matchOrderPos < matchOrderLength; ++matchOrderPos) {
 			int pattern_idx = _matchOrder[matchOrderPos];
 			uint8_t hay_letter = haystack[pos + pattern_idx];
 			bool dont_care = mask[pattern_idx] == SignatureMask::DONT_CARE;

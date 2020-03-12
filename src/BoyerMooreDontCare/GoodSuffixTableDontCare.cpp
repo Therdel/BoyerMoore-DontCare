@@ -42,8 +42,9 @@ auto GoodSuffixTableDontCare::_preprocessShifts() -> void {
 
 	// build table
 	// write recommended shifts to table
-	for (int matchLength = 1; matchLength < _matchOrder.size(); ++matchLength) {
-		for (int shift = 1; shift <= _signature.pattern().size(); ++shift) {
+	int matchOrderLength = static_cast<int>(_matchOrder.size()), patternLength = static_cast<int>(_signature.pattern().size());
+	for (int matchLength = 1; matchLength < matchOrderLength; ++matchLength) {
+		for (int shift = 1; shift <= patternLength; ++shift) {
 			if (_checkShiftStrong(matchLength, shift)) {
 				int mismatchPatternIndex = _matchOrder[matchLength];
 				intStorage[mismatchPatternIndex] = shift;
@@ -105,15 +106,16 @@ auto GoodSuffixTableDontCare::_checkMatchPositionsAfterShift(size_t amountMatchi
 }
 
 auto GoodSuffixTableDontCare::_computeAfterMatchShift() const -> int {
+	int patternLength = static_cast<int>(_signature.pattern().size());
 	int afterMatchShift = -1;
-	for (int shift = 1; shift < _signature.pattern().size(); ++shift) {
+	for (int shift = 1; shift < patternLength; ++shift) {
 		if (_checkMatchPositionsAfterShift(_matchOrder.size(), shift)) {
 			afterMatchShift = shift;
 		}
 	}
 	if (afterMatchShift == -1) {
 		// no overlapping shift possible, shift by whole pattern
-		afterMatchShift = static_cast<int>(_signature.pattern().size());
+		afterMatchShift = patternLength;
 	}
 	return afterMatchShift;
 }

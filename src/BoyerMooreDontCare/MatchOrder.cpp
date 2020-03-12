@@ -20,8 +20,8 @@ namespace MatchOrder {
 	}
 
 	auto computeMaxDontCareDistance(const Signature& signature) -> MatchOrder_t {
-		auto patternSize = signature.pattern().size();
-		MatchOrder_t matchOrder(patternSize);
+		int patternLength = static_cast<int>(signature.pattern().size());
+		MatchOrder_t matchOrder(patternLength);
 
 		// Patt: _aba__asdf
 		// Dist: _123__1234
@@ -34,11 +34,11 @@ namespace MatchOrder {
 			int dontCareDistance = -1;
 			int matchOrder = -1;
 		};
-		std::vector<Info> positions(patternSize);
+		std::vector<Info> positions(patternLength);
 
 		// 1. compute dontcareDistance
 		int lastDontCarePos = -1;
-		for (int i = 0; i < patternSize; ++i) {
+		for (int i = 0; i < patternLength; ++i) {
 			// init patternIndices
 			positions[i].patternIndex = i;
 			// init dontCareDistances
@@ -70,7 +70,8 @@ namespace MatchOrder {
 
 		// 3. write indices in order to matchOrder field
 		int lastCaringMatchOrderIndex = -1;
-		for (int i = 0; i < positions.size(); ++i) {
+		int amountPositions = static_cast<int>(positions.size());
+		for (int i = 0; i < amountPositions; ++i) {
 			auto& position = positions[i];
 			matchOrder[i] = position.patternIndex;
 

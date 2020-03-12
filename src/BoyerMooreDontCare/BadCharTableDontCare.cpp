@@ -19,7 +19,8 @@ auto BadCharTableDontCare::printTable() const -> void {
 	cout << std::showbase;	// hex numbers with 0x prefix
 
 	cout << "Pattern:\t";
-	for (int i = 0; i < pattern.size(); ++i) {
+	int patternLength = static_cast<int>(pattern.size());
+	for (int i = 0; i < patternLength; ++i) {
 		if (mask[i] == SignatureMask::DONT_CARE) {
 			cout << "??\t";
 		}
