@@ -30,14 +30,14 @@ private:
 	auto _parseMaskAndPattern(std::string_view signatureText) -> void {
 		using namespace SignatureMask;
 		Utility::split_for(signatureText, " ", [this](std::string_view byteStr) {
-			if (byteStr.size() != 2) {
-				throw std::invalid_argument("Wrong signature byte description size");
-			}
-			else if (byteStr == "??") {
+			if (byteStr == "??" || byteStr == "?") {
 				_pattern.push_back(0);
 				_mask.push_back(DONT_CARE);
 			}
 			else {
+				if (byteStr.size() != 2) {
+					throw std::invalid_argument("Wrong signature byte description size");
+				}
 				uint8_t byteValue = std::stoi(std::string(byteStr), nullptr, 16);
 				_pattern.push_back(byteValue);
 				_mask.push_back(CARE);
