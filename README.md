@@ -10,8 +10,8 @@ and add the following to your CMakeLists.txt:
 ```
 add_subdirectory(BoyerMoore-DontCare)
 
-add_executable(<your program> ${BOYERMOOREDONTCARE_SOURCES})
-target_include_directories(<your program> ${BOYERMOOREDONTCARE_INCLUDE_DIRS})
+target_include_directories(<target> PRIVATE ${BOYERMOOREDONTCARE_INCLUDE_DIRS})
+target_sources(<target> PRIVATE ${BOYERMOOREDONTCARE_SOURCES})
 
 ```
 
