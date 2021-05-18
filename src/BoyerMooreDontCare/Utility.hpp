@@ -2,7 +2,7 @@
 #include <string_view>
 #include <functional>
 
-namespace Utility {
+namespace Util {
     // simple string split
     // source: https://www.bfilipek.com/2018/07/string-view-perf-followup.html
     // code: https://github.com/fenbf/StringViewTests/blob/master/StringViewTest.cpp

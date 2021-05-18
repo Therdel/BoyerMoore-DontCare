@@ -29,7 +29,7 @@ private:
 
 	auto _parseMaskAndPattern(std::string_view signatureText) -> void {
 		using namespace SignatureMask;
-		Utility::split_for(signatureText, " ", [this](std::string_view byteStr) {
+		Util::split_for(signatureText, " ", [this](std::string_view byteStr) {
 			if (byteStr == "??" || byteStr == "?") {
 				_pattern.push_back(0);
 				_mask.push_back(DONT_CARE);

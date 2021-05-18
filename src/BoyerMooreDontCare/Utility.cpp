@@ -2,7 +2,7 @@
 
 #include "Utility.hpp"
 
-namespace Utility {
+namespace Util {
 	auto split_for(std::string_view str, std::string_view delims, std::function<void(std::string_view)> handler) -> void {
 		for (auto first = str.data(), second = str.data(), last = first + str.size();
 			second != last && first != last; first = second + 1) {

@@ -9,14 +9,22 @@ BoyerMoore::BoyerMoore(PatternRef pattern)
 , _goodSuffixTable(_arenaAllocator, pattern) {
 }
 
-auto BoyerMoore::search(std::basic_string_view<uint8_t> haystack)->std::vector<uint8_t const*> {
+auto BoyerMoore::operator()(std::basic_string_view<uint8_t> haystack) const -> std::pair<const uint8_t*, const uint8_t*> {
+	/*
+	If the pattern ([pat_first, pat_last)) is empty, returns make_pair(first, first).
+	Otherwise, returns a pair of iterators to the first and one past last positions
+	in [first, last) where a subsequence that compares equal to [pat_first, pat_last)
+	as defined by pred is located, or make_pair(last, last) otherwise.
+	*/
+
+	if (_pattern.empty()) {
+		return { haystack.data(), haystack.data() };
+	}
 	size_t lastMatchCandidatePos = haystack.size() - _pattern.size();
 	int lastPatternOffset = static_cast<int>(_pattern.size() - 1);
 
-	std::vector<uint8_t const*> matches;
-
 	size_t pos = 0;
-	while(pos <= lastMatchCandidatePos) {
+	while (pos <= lastMatchCandidatePos) {
 		int nextShift;
 
 		bool match = true;
@@ -41,12 +49,42 @@ auto BoyerMoore::search(std::basic_string_view<uint8_t> haystack)->std::vector<u
 		}
 
 		if (match) {
-			matches.push_back(haystack.data() + pos);
-			nextShift = _goodSuffixTable.afterMatchShift();
+			const uint8_t* match_first = haystack.data() + pos;
+			const uint8_t* match_last = match_first + _pattern.size();
+			return { match_first, match_last };
 		}
 
 		// shift pattern
 		pos += nextShift;
+	}
+
+	// no match found
+    const uint8_t* haystack_last = haystack.data() + haystack.size();
+    return { haystack_last, haystack_last };
+}
+
+auto BoyerMoore::search(std::basic_string_view<uint8_t> haystack)->std::vector<uint8_t const*> {
+	size_t lastMatchCandidatePos = haystack.size() - _pattern.size();
+	int lastPatternOffset = static_cast<int>(_pattern.size() - 1);
+
+	std::vector<uint8_t const*> matches;
+
+	size_t pos = 0;
+	while(pos <= lastMatchCandidatePos) {
+		auto remaining = haystack.substr(pos);
+		auto [match_first, match_last] = operator()(remaining);
+		
+		bool match_found = match_first != match_last;
+		if (match_found) {
+			matches.push_back(match_first);
+
+			// shift pattern
+			pos = match_first - haystack.data();
+			pos += _goodSuffixTable.afterMatchShift();
+		}
+		else {
+			break;
+		}
 	}
 
 	return matches;
