@@ -1,5 +1,6 @@
 #pragma once
 #include <string>		// std::stoi
+#include <cstdint>
 #include <stdexcept>	// std::invalid_argument
 
 #include "Utility.hpp"

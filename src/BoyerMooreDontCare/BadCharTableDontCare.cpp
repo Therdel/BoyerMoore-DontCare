@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>	// resetiosflags
+#include <numeric_limits>
 
 #include "BadCharTableDontCare.hpp"
 #include "HeteroArenaAllocator/ArenaAllocator.hpp"

@@ -1,4 +1,5 @@
 #include <optional>
+#include <numeric_limits>
 
 #include "BadCharTable.hpp"
 #include "HeteroArenaAllocator/ArenaAllocator.hpp"

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstdint>
 #include <array>
 
 #include "ForwardList.hpp"
